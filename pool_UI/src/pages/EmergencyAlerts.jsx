@@ -15,7 +15,6 @@ const EmergencyAlerts = () => {
   const [selectedAlertType, setSelectedAlertType] = useState('')
   const [loading, setLoading] = useState(true)
   
-  // Get today and 7 days ago formatted for date input
   const today = format(new Date(), 'yyyy-MM-dd')
   const sevenDaysAgo = format(subDays(new Date(), 7), 'yyyy-MM-dd')
   
@@ -28,7 +27,6 @@ const EmergencyAlerts = () => {
           getUsers()
         ])
         
-        // Sort alerts by time (newest first)
         const sortedAlerts = alertsData.sort((a, b) => 
           new Date(b.alertTime) - new Date(a.alertTime)
         )
@@ -37,7 +35,6 @@ const EmergencyAlerts = () => {
         setFilteredAlerts(sortedAlerts)
         setUsers(usersData)
         
-        // Set default date range (last 7 days)
         setStartDate(sevenDaysAgo)
         setEndDate(today)
       } catch (error) {
@@ -58,7 +55,6 @@ const EmergencyAlerts = () => {
   const filterAlerts = () => {
     let filtered = [...alerts]
     
-    // Filter by date range
     if (startDate && endDate) {
       const start = new Date(startDate)
       start.setHours(0, 0, 0, 0)
@@ -67,13 +63,10 @@ const EmergencyAlerts = () => {
       end.setHours(23, 59, 59, 999)
       
       filtered = filtered.filter(alert => {
-        // const alertDate = new Date(alert.alertTime)
-        // return alertDate >= start && alertDate <= end
         return true
       })
     }
     
-    // Filter by alert type
     if (selectedAlertType) {
       filtered = filtered.filter(alert => alert.alertType === selectedAlertType)
     }
