@@ -2,7 +2,6 @@ import axios from 'axios'
 
 const API_URL = 'http://localhost:5000'
 
-// Get temperature history
 export const getTemperatureHistory = async () => {
   try {
     const response = await axios.get(`${API_URL}/temperature/getHistory`)
@@ -13,7 +12,6 @@ export const getTemperatureHistory = async () => {
   }
 }
 
-// Get current temperature
 export const getCurrentTemperature = async () => {
   try {
     const response = await axios.get(`${API_URL}/temperature/getTemp`)
@@ -27,7 +25,6 @@ export const getCurrentTemperature = async () => {
   }
 }
 
-// Add new temperature measurement
 export const addTemperature = async (tempData) => {
   try {
     const response = await axios.post(`${API_URL}/temperature/addTemp`, tempData)
