@@ -2,13 +2,11 @@ import { useEffect, useState } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-// Components
 import Navbar from './components/layout/Navbar'
 import Sidebar from './components/layout/Sidebar'
 import Footer from './components/layout/Footer'
 import EmergencyAlert from './components/alerts/EmergencyAlert'
 
-// Pages
 import Dashboard from './pages/Dashboard'
 import Users from './pages/Users'
 import UserForm from './pages/UserForm'
@@ -17,11 +15,9 @@ import EmergencyAlerts from './pages/EmergencyAlerts'
 import Temperature from './pages/Temperature'
 import LoginPage from './pages/LoginPage'
 
-// API
 import { getEmergencyAlerts } from './services/emergencyService'
 import { checkLoginStatus } from './services/authService'
 
-// CSS
 import './App.css'
 
 function App() {
@@ -47,13 +43,11 @@ function App() {
   }, [])
 
   useEffect(() => {
-    // Only fetch emergencies if logged in
     if (isLoggedIn) {
       const fetchEmergencies = async () => {
         try {
           const data = await getEmergencyAlerts()
           
-          // Filter for only active emergencies (created in the last hour)
           const oneHourAgo = new Date()
           oneHourAgo.setHours(oneHourAgo.getHours() - 1)
           
@@ -63,7 +57,6 @@ function App() {
           
           setEmergencies(activeEmergencies)
           
-          // Show toast for new emergencies
           if (activeEmergencies.length > 0) {
             toast.error(`${activeEmergencies.length} קריאות חירום פעילות!`, {
               autoClose: false,
@@ -75,10 +68,8 @@ function App() {
         }
       }
 
-      // Initial fetch
       fetchEmergencies()
       
-      // Set up interval to check for new emergencies every minute
       const interval = setInterval(fetchEmergencies, 60000)
       
       return () => clearInterval(interval)
