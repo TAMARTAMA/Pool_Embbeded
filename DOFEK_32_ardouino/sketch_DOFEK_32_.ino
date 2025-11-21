@@ -7,7 +7,6 @@ MAX30105 particleSensor;
 #define I2C_SDA 21
 #define I2C_SCL 22
 
-// משתנים לחישוב BPM
 unsigned long lastBeat = 0;
 float beatsPerMinute;
 float beatAvg;
@@ -16,12 +15,10 @@ bool flag=true;
 float bpm = 0;
 
 
-const char* ssid = "DESKTOP-P6FFS03 5806";     // שם הרשת
+const char* ssid = "DESKTOP-P6FFS03 5806";     
 const char* password = "73f|X048";   
-String userId;// סיסמה
-// i:192.168.1.136
-// IP: 192.168.1.100
-const char* serverIP = "192.168.137.1";  // כתובת ה-IP של המחשב שלך
+String userId;
+const char* serverIP = "192.168.137.1";  
 const int serverPort = 5000;
 
 void setup() {
@@ -57,6 +54,7 @@ void loop() {
   delay(50000);
   
 }
+
 
 
 
