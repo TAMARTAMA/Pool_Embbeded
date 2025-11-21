@@ -1,6 +1,5 @@
 const User=require('../Models/pool/userPool.model')
 const Entry=require('../Models/pool/entryPool.model')
-// רישום משתמש
 const register = async (req, res) => {
     const newUserData = req.body;
 
@@ -24,7 +23,6 @@ const removeUser = async (req, res) => {
     }
   };
 const getAllusers = async (req, res) => {
-    // const { newUser } = req.body;
     try {
         const users= await User.find( );
 
@@ -33,14 +31,11 @@ const getAllusers = async (req, res) => {
         res.status(500).send({ error: e.message });
     }
 };
-// התחברות משתמש
 const login = async (req, res) => {
     const  tag = req.query.tag;
     try {
         const user = await User.findOne({ rfidTag: tag });
         if (!user) return res.status(404).send('User not found');
-
-        // השוואת סיסמאות
       
         res.status(200).json({ message: 'Login successful',name:user.fullName });
     } catch (e) {
@@ -49,14 +44,12 @@ const login = async (req, res) => {
 };
 const getLastUserEntry = async (req, res) => {
   try {
-    // מציאת הכניסה האחרונה לפי תאריך
     const lastEntry = await Entry.findOne().sort({ entryTime: -1 });
 
     if (!lastEntry) {
       return res.status(404).json({ message: 'No entries found' });
     }
 
-    // שליפת פרטי המשתמש לפי userId
     const user = await User.findOne({ userId: lastEntry.userId });
 
     if (!user) {
@@ -80,5 +73,6 @@ const getLastUserEntry = async (req, res) => {
     res.status(500).json({ error: e.message });
   }
 };
+
 
 module.exports={register,login,removeUser,getAllusers,getLastUserEntry}
