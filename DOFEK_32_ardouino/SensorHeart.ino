@@ -1,29 +1,24 @@
-
-
-// הפעלת החיישן
 void setupSensor() {
   if (!particleSensor.begin(Wire, I2C_SPEED_STANDARD)) {
     Serial.println("לא הצליח לאתחל את MAX30102");
     while (1);
   }
 
-  particleSensor.setup();  // שימוש בהגדרות ברירת מחדל
-  particleSensor.setPulseAmplitudeRed(0x0A);   // לד אדום
-  particleSensor.setPulseAmplitudeGreen(0);    // לא צריך ירוק למדידות דופק
+  particleSensor.setup();  
+  particleSensor.setPulseAmplitudeRed(0x0A);   
+  particleSensor.setPulseAmplitudeGreen(0);    
   Serial.println("MAX30102 מופעל");
 }
 
-// כיבוי החיישן
 void shutdownSensor() {
   particleSensor.shutDown();
   Serial.println("MAX30102 נכבה");
 }
 
 bool isFingerOnSensor(long irValue) {
-  return irValue > 50000;  // סף סטנדרטי, אפשר לכוונן לפי ניסיון
+  return irValue > 50000;  
 }
 
-// קריאת ערכי הדופק והחמצן
 void readVitals() {
   long irValue = particleSensor.getIR();
 
@@ -54,3 +49,4 @@ String evaluateSensorState(float bpm) {
 
   return "NORMAL";
 }
+
