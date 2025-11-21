@@ -2,7 +2,6 @@ import axios from 'axios'
 
 const API_URL = 'http://localhost:5000'
 
-// Get all emergency alerts
 export const getEmergencyAlerts = async () => {
   try {
     const response = await axios.get(`${API_URL}/emergency/getHistory`)
@@ -13,7 +12,6 @@ export const getEmergencyAlerts = async () => {
   }
 }
 
-// Get emergency history for a specific user
 export const getUserEmergencyHistory = async (userId) => {
   try {
     const response = await axios.get(`${API_URL}/emergency/getHistory/${userId}`)
@@ -24,7 +22,6 @@ export const getUserEmergencyHistory = async (userId) => {
   }
 }
 
-// Add new emergency alert
 export const addEmergencyAlert = async (alertData) => {
   try {
     const response = await axios.post(`${API_URL}/emergency/add`, alertData)
