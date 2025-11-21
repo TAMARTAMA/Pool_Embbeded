@@ -2,7 +2,6 @@ import axios from 'axios'
 
 const API_URL = 'http://localhost:5000'
 
-// Get all users
 export const getUsers = async () => {
   try {
     const response = await axios.get(`${API_URL}/user/getAll`)
@@ -13,7 +12,6 @@ export const getUsers = async () => {
   }
 }
 
-// Get single user by ID
 export const getUser = async (userId) => {
   try {
     const response = await axios.get(`${API_URL}/user/${userId}`)
@@ -24,7 +22,6 @@ export const getUser = async (userId) => {
   }
 }
 
-// Create new user
 export const createUser = async (userData) => {
   try {
     const response = await axios.post(`${API_URL}/user/register`, userData)
@@ -35,7 +32,6 @@ export const createUser = async (userData) => {
   }
 }
 
-// Update user
 export const updateUser = async (userId, userData) => {
   try {
     const response = await axios.put(`${API_URL}/user/${userId}`, userData)
@@ -46,7 +42,6 @@ export const updateUser = async (userId, userData) => {
   }
 }
 
-// Remove user
 export const removeUser = async (userId) => {
   try {
     const response = await axios.delete(`${API_URL}/user/removeUser?userId=${userId}`)
