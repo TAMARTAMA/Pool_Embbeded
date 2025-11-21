@@ -2,7 +2,6 @@ import axios from 'axios'
 
 const API_URL = 'http://localhost:5000'
 
-// Get all entries
 export const getEntries = async () => {
   try {
     const response = await axios.get(`${API_URL}/entry/getAll`)
@@ -13,7 +12,6 @@ export const getEntries = async () => {
   }
 }
 
-// Add new entry
 export const addEntry = async (entryData) => {
   try {
     const response = await axios.get(`${API_URL}/entry/addEntry?tag=${entryData.rfidTag}`)
@@ -24,7 +22,6 @@ export const addEntry = async (entryData) => {
   }
 }
 
-// Get today's entries
 export const getTodayEntries = async () => {
   try {
     const today = new Date()
