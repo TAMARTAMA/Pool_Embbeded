@@ -16,12 +16,10 @@ const Entries = () => {
   const [loading, setLoading] = useState(true)
   const [currentTemperature, setCurrentTemperature] = useState(null)
   
-  // Format date for input
   const formatDateForInput = (date) => {
     return format(date, 'yyyy-MM-dd')
   }
   
-  // Current date
   const today = formatDateForInput(new Date())
   
   useEffect(() => {
@@ -34,7 +32,6 @@ const Entries = () => {
           getCurrentTemperature()
         ])
         
-        // Sort entries by entry time (newest first)
         const sortedEntries = entriesData.sort((a, b) => 
           new Date(b.entryTime) - new Date(a.entryTime)
         )
@@ -92,7 +89,6 @@ const Entries = () => {
     }
     
     try {
-      // Find user by RFID tag
       const user = users.find(u => u.rfidTag === rfidTag)
       
       if (!user) {
@@ -100,7 +96,6 @@ const Entries = () => {
         return
       }
       
-      // Add entry
       const entryData = {
         userId: user.userId,
         rfidTag: rfidTag,
@@ -109,11 +104,9 @@ const Entries = () => {
       
       const newEntry = await addEntry(entryData)
       
-      // Update entries list
       setEntries([newEntry, ...entries])
       filterEntries()
       
-      // Reset form
       setRfidTag('')
       
       toast.success('כניסה נרשמה בהצלחה')
