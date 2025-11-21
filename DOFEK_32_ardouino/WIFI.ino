@@ -32,13 +32,11 @@ void postEmgercy(String alertId, String userId, String alertType, int sensorValu
   if (WiFi.status() == WL_CONNECTED) {
    HTTPClient http;
 String url = "http://" + String(serverIP) + ":" + String(serverPort) + "/emergency/add";
-    http.begin(url); // התחברות לכתובת ה-API
-    http.addHeader("Content-Type", "application/json"); // קביעת סוג התוכן של הבקשה
+    http.begin(url); 
+    http.addHeader("Content-Type", "application/json"); 
 
-    // יצירת הנתונים בפורמט JSON
     String jsonPayload = "{\"alertId\": \"" + alertId + "\", \"userId\": \"" + userId + "\", \"alertType\": \"" + alertType + "\", \"sensorValue\": " + String(sensorValue) + "}";
 
-    // שליחת בקשת POST עם הנתונים
     int httpResponseCode = http.POST(jsonPayload);
 
     if (httpResponseCode > 0) {
@@ -49,9 +47,9 @@ String url = "http://" + String(serverIP) + ":" + String(serverPort) + "/emergen
       Serial.println("Error sending POST request");
     }
 
-    http.end(); // סיום הבקשה
+    http.end(); 
   
-  delay(10000); // המתנה של 10 שניות לפני שליחת הבקשה הבאה
+  delay(10000); 
   } else {
     Serial.println("לא מחובר ל-WiFi, לא נשלחה בקשה.");
   }
@@ -84,7 +82,6 @@ void getRecentUserId() {
       Serial.println("תגובה מהשרת:");
       Serial.println(payload);
 
-      // ניתוח ה-JSON
       StaticJsonDocument<512> doc;
       DeserializationError error = deserializeJson(doc, payload);
 
@@ -108,4 +105,5 @@ void getRecentUserId() {
     Serial.println("לא מחובר ל-WiFi");
   }
 }
+
 
