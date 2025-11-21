@@ -1,6 +1,6 @@
 
 #include <Wire.h>
-#include <WiFi.h> // ספריה ל-WiFi עבור ESP32
+#include <WiFi.h> 
 
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
@@ -14,7 +14,7 @@ void connectToWiFi() {
   Serial.print("Connecting to WiFi: ");
   Serial.println(ssid);
 
-  WiFi.begin(ssid, password); // התחברות לרשת
+  WiFi.begin(ssid, password); 
 
   int retries = 0;
   while (WiFi.status() != WL_CONNECTED && retries < 20) {
@@ -47,7 +47,6 @@ void postTemperature(float temp) {
   http.begin(url);
   http.addHeader("Content-Type", "application/json");
 
-  // בניית ה-JSON
   String jsonPayload = "{";
   jsonPayload += "\"measurementId\": " + String(measurementId++) + ",";
   jsonPayload += "\"temperature\": " + String(temp, 2);
@@ -56,10 +55,8 @@ void postTemperature(float temp) {
   Serial.println("Sending POST request to: " + url);
   Serial.println("Payload: " + jsonPayload);
 
-  // שליחת הבקשה
   int httpResponseCode = http.POST(jsonPayload);
 
-  // בדיקת תגובת השרת
   if (httpResponseCode > 0) {
     Serial.print("HTTP Response code: ");
     Serial.println(httpResponseCode);
@@ -85,7 +82,6 @@ void userLogin(String tag) {
       Serial.println("תגובה מהשרת:");
       Serial.println(payload);
 
-      // ניתוח ה-JSON
       StaticJsonDocument<512> doc;
       DeserializationError error = deserializeJson(doc, payload);
 
@@ -123,7 +119,6 @@ void getRecentUserId() {
       Serial.println("תגובה מהשרת:");
       Serial.println(payload);
 
-      // ניתוח ה-JSON
       StaticJsonDocument<512> doc;
       DeserializationError error = deserializeJson(doc, payload);
 
@@ -161,7 +156,6 @@ void addEntry(String tag) {
       Serial.println("תגובה מהשרת:");
       Serial.println(payload);
 
-      // ניתוח ה-JSON
       StaticJsonDocument<512> doc;
       DeserializationError error = deserializeJson(doc, payload);
 
@@ -187,10 +181,10 @@ void addEntry(String tag) {
 }
 
 
-#define LM75_ADDRESS 0x3C  // כתובת I2C של ה-LM75
+#define LM75_ADDRESS 0x3C  
 
 void enableSensorTemp() {
-  Wire.begin(); // אתחול תקשורת I2C
+  Wire.begin(); 
   Serial.println("Sensor enabled");
 }
 
@@ -200,10 +194,10 @@ void disableSensorTemp() {
 
 float readTemperature() {
   Wire.beginTransmission(LM75_ADDRESS);
-  Wire.write(0x00);  // בקשת קריאת טמפרטורה
+  Wire.write(0x00);  
   Wire.endTransmission(false);
 
-  Wire.requestFrom(LM75_ADDRESS, 2);  // קריאת 2 בתים
+  Wire.requestFrom(LM75_ADDRESS, 2);  
 
   if (Wire.available() == 2) {
     byte msb = Wire.read();
@@ -217,31 +211,25 @@ float readTemperature() {
     return NAN;
   }
 }
-#include <ESP32Servo.h>
-//Servo
 const int SERVO_PIN = 27;
 Servo myServo;
 
-// מחבר את הסרוו לפין
 void turnOnServo() {
 myServo.attach(SERVO_PIN, 500, 2400);
   Serial.println("Servo attached");
 }
 
-// מנתק את הסרוו
-void turnOffServo() {
+]void turnOffServo() {
   myServo.detach();
   Serial.println("Servo detached");
 }
 
-// מסובב את הסרוו ל־180 מעלות
 void rotateServoMax() {
-  myServo.write(180);  // הכי הרבה שאפשר
+  myServo.write(180);  
   Serial.println("Rotated to 180 degrees");
 }
 
 
-//פינים לחישן מרחק
 const int trigPin = 12;
 const int echoPin = 13;
 
@@ -250,21 +238,18 @@ const int echoPin = 13;
 
 long duration;
 float distanceCm;
-float distanceInch;// מדידת מרחק
+float distanceInch;
 float measureDistance() {
-  // שליחת פולס
   digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
   digitalWrite(trigPin, HIGH);
   delayMicroseconds(10);
   digitalWrite(trigPin, LOW);
 
-  // מדידת זמן
   duration = pulseIn(echoPin, HIGH);
   distanceCm = duration * SOUND_SPEED / 2;
   distanceInch = distanceCm * CM_TO_INCH;
 
-  // הדפסה
   Serial.print("Distance (cm): ");
   Serial.println(distanceCm);
   Serial.print("Distance (inch): ");
@@ -272,13 +257,11 @@ float measureDistance() {
   return distanceInch;
 }
 
-// הפעלת החיישן
 void enableSensorHeight() {
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
 }
 
-// כיבוי החיישן (הגדרת הפינים כ־INPUT כדי לנתק)
 void disableSensor() {
   pinMode(trigPin, INPUT);
   pinMode(echoPin, INPUT);
